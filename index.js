@@ -6,6 +6,7 @@ var _ = require("sdk/l10n").get;
 
 var {ActionButton} = require('sdk/ui/button/action');
 var {openDialog} = require('sdk/window/utils');
+var {Hotkey} = require('sdk/hotkeys');
 
 var base64 = require('sdk/base64');
 var toolbarButton = ActionButton({
@@ -125,3 +126,37 @@ require("sdk/context-menu").Item({
     wallabagBagIt(pageURL);
   }
 });
+
+var shortcutHotkey = function() {
+  var key = null;
+
+  function getHotkeyPreference() {
+      return require('sdk/simple-prefs').prefs.wallabagShortcutKey;
+  }
+
+  function reset() {
+    if (key) {
+      key.destroy();
+    }
+
+    var newKey = getHotkeyPreference();
+    if (/^\w$/.test(newKey)) {
+      set(newKey);
+    }
+  }
+
+  function set(newKey) {
+    key = Hotkey({
+        combo: 'accel-alt-' + (newKey || getHotkeyPreference()),
+        onPress: wallabag.buttonClick
+    });
+  }
+
+  return {
+    reset: reset,
+    set: set
+  }
+}();
+shortcutHotkey.set();
+
+require("sdk/simple-prefs").on("wallabagShortcutKey", shortcutHotkey.reset);

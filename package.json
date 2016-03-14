@@ -40,6 +40,13 @@
         "title": "Allow wallabag to close dialog window automatically.",
         "type": "bool",
         "value": true
+    },
+    {
+        "name": "wallabagShortcutKey",
+        "title": "Shortcut key",
+        "description": "Shortcut will be accel-alt-(chosen key value)",
+        "type": "string",
+        "value": "s"
     }
   ]
 }
