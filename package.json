@@ -6,6 +6,9 @@
   "description": "Post URL to Wallabag",
   "main": "index.js",
   "author": "Alda Marteau-Hardi",
+  "permissions": {
+    "private-browsing": true
+  },
   "engines": {
     "firefox": ">=38.0a1"
   },
